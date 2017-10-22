@@ -8,6 +8,7 @@ const sinon = require('sinon')
 const Serverless = require('serverless/lib/Serverless')
 const AwsProvider = require('serverless/lib/plugins/aws/provider/awsProvider')
 const AlexaDevServer = require('../src')
+const path = require('path')
 
 chai.use(chaiAsPromised)
 const expect = chai.expect
@@ -50,6 +51,7 @@ describe('index.js', () => {
   })
 
   afterEach((done) => {
+    if (alexaDevServer && alexaDevServer.server && alexaDevServer.server.server) alexaDevServer.server.server.close()
     sandbox.restore()
     done()
   })
@@ -189,5 +191,21 @@ describe('index.js', () => {
         expect(result.ok).equal(false)
       )
     ])
+  })
+
+  it('should look in the .webpack/service folder when webpack plugin is present', () => {
+    let expectedPath = path.join(__dirname, '.webpack/service', 'lambda-handler')
+    serverless.service.functions = {
+      'MyHttpResource': {
+        handler: 'lambda-handler.httpGet',
+        events: [{http: {method: 'GET', path: '/'}}]
+      }
+    }
+    serverless.service.plugins = ['serverless-webpack']
+
+    alexaDevServer = new AlexaDevServer(serverless, {port: 5009})
+    alexaDevServer.hooks['local-dev-server:loadEnvVars']()
+    alexaDevServer.hooks['local-dev-server:start']()
+    expect(alexaDevServer.server.functions[0].handlerModulePath).equal(expectedPath)
   })
 })

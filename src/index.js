@@ -28,11 +28,11 @@ class ServerlessLocalDevServerPlugin {
   }
 
   start () {
-    let server = new Server()
-    server.log = this.serverless.cli.log.bind(this.serverless.cli)
-    Object.assign(server.customEnvironment, this.options.environment)
-    server.setConfiguration(this.serverless.service, this.serverless.config.servicePath)
-    server.start(this.options.port || 5005)
+    this.server = new Server()
+    this.server.log = this.serverless.cli.log.bind(this.serverless.cli)
+    Object.assign(this.server.customEnvironment, this.options.environment)
+    this.server.setConfiguration(this.serverless.service, this.serverless.config.servicePath)
+    this.server.start(this.options.port || 5005)
   }
 }
 

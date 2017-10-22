@@ -30,7 +30,7 @@ class Server {
     if (this.staticFolder) {
       this.app.use('/static', Express.static(this.staticFolder))
     }
-    this.app.listen(port, _ => {
+    this.server = this.app.listen(port, _ => {
       this.log(`Listening on port ${port} for requests 🚀`)
       this.log('----')
       this.functions.forEach(func => {
