@@ -53,6 +53,7 @@ class Server {
     this.functions = Object.keys(serverlessConfig.functions).map(name => {
       const functionConfig = serverlessConfig.functions[name]
       const [handlerSrcFile, handlerFunctionName] = functionConfig.handler.split('.')
+      if (Array.isArray(serverlessConfig.plugins) && serverlessConfig.plugins.includes('serverless-webpack')) servicePath += '/.webpack/service'
       return {
         name: name,
         config: serverlessConfig.functions[name],
