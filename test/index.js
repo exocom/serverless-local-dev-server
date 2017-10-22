@@ -63,19 +63,19 @@ describe('index.js', () => {
     serverless.service.functions = {
       'MyAlexaSkill': {
         handler: 'lambda-handler.alexaSkill',
-        events: [ 'alexaSkill' ]
+        events: ['alexaSkill']
       },
       'MyHttpResource': {
         handler: 'lambda-handler.httpGet',
-        events: [ { http: { method: 'GET', path: '/' } } ]
+        events: [{http: {method: 'GET', path: '/'}}]
       },
       'MyHttpResourceID': {
         handler: 'lambda-handler.httpGet',
-        events: [ { http: { method: 'GET', path: '/:id' } } ]
+        events: [{http: {method: 'GET', path: '/:id'}}]
       },
       'MyShorthandHttpResource': {
         handler: 'lambda-handler.httpPost',
-        events: [ { http: 'POST shorthand' } ]
+        events: [{http: 'POST shorthand'}]
       }
     }
     alexaDevServer = new AlexaDevServer(serverless)
@@ -109,10 +109,10 @@ describe('index.js', () => {
     serverless.service.functions = {
       'MyHttpResource': {
         handler: 'lambda-handler.httpGet',
-        events: [ { http: 'GET /' } ]
+        events: [{http: 'GET /'}]
       }
     }
-    alexaDevServer = new AlexaDevServer(serverless, { port: 5006 })
+    alexaDevServer = new AlexaDevServer(serverless, {port: 5006})
     alexaDevServer.hooks['local-dev-server:loadEnvVars']()
     alexaDevServer.hooks['local-dev-server:start']()
     return sendHttpGetRequest(5006, '').then(result =>
@@ -129,14 +129,14 @@ describe('index.js', () => {
     serverless.service.functions = {
       'MyAlexaSkill': {
         handler: 'lambda-handler.mirrorEnv',
-        events: [ 'alexaSkill' ],
+        events: ['alexaSkill'],
         environment: {
           foo: 'baz'
         }
       }
     }
     let options = {
-      environment: { la: 'lala' },
+      environment: {la: 'lala'},
       port: 5007
     }
     alexaDevServer = new AlexaDevServer(serverless, options)
@@ -157,10 +157,10 @@ describe('index.js', () => {
     serverless.service.functions = {
       'SomeFunction': {
         handler: 'lambda-handler.none',
-        events: [ 'blub' ]
+        events: ['blub']
       }
     }
-    alexaDevServer = new AlexaDevServer(serverless, { port: 5008 })
+    alexaDevServer = new AlexaDevServer(serverless, {port: 5008})
     alexaDevServer.hooks['local-dev-server:loadEnvVars']()
     alexaDevServer.hooks['local-dev-server:start']()
     // Expect rejection of request as no server is running on port 5008
@@ -171,14 +171,14 @@ describe('index.js', () => {
     serverless.service.functions = {
       'MyAlexaSkill': {
         handler: 'lambda-handler.fail',
-        events: [ 'alexaSkill' ]
+        events: ['alexaSkill']
       },
       'MyHttpResource': {
         handler: 'lambda-handler.fail',
-        events: [ { http: 'GET /' } ]
+        events: [{http: 'GET /'}]
       }
     }
-    alexaDevServer = new AlexaDevServer(serverless, { port: 5009 })
+    alexaDevServer = new AlexaDevServer(serverless, {port: 5009})
     alexaDevServer.hooks['local-dev-server:loadEnvVars']()
     alexaDevServer.hooks['local-dev-server:start']()
     return Promise.all([

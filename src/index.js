@@ -10,9 +10,9 @@ class ServerlessLocalDevServerPlugin {
     this.commands = {
       'local-dev-server': {
         usage: 'Runs a local dev server for Alexa-Skill and HTTP functions',
-        lifecycleEvents: [ 'loadEnvVars', 'start' ],
+        lifecycleEvents: ['loadEnvVars', 'start'],
         options: {
-          port: { usage: 'Port to listen on', shortcut: 'p' }
+          port: {usage: 'Port to listen on', shortcut: 'p'}
         }
       }
     }
@@ -24,7 +24,7 @@ class ServerlessLocalDevServerPlugin {
   }
 
   loadEnvVars () {
-    Object.assign(process.env, { IS_LOCAL: true })
+    Object.assign(process.env, {IS_LOCAL: true})
   }
 
   start () {
