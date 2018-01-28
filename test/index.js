@@ -182,6 +182,8 @@ describe('index.js', () => {
   })
 
   it('should set environment variables correctly', () => {
+    serverless.service.provider.profile = 'default';
+    serverless.service.provider.region = 'us-west-2';
     serverless.service.provider.environment = {
       foo: 'bar',
       bla: 'blub',
@@ -210,7 +212,8 @@ describe('index.js', () => {
       expect(json.IS_LOCAL).equal(true)
       expect(json.foo).equal('baz')
       expect(json.bla).equal('blub')
-      expect(json.la).equal('lala')
+      expect(json.AWS_PROFILE).equal('default')
+      expect(json.AWS_REGION).equal('us-west-2')
     })
   })
 
